@@ -1,0 +1,23 @@
+name: pulse_tv
+description: Modern live TV player for Android TV & mobile.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.5.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  media_kit: ^1.1.11
+  media_kit_video: ^1.2.5
+  media_kit_libs_video: ^1.0.5
+  http: ^1.2.2
+  shared_preferences: ^2.3.2
+  cached_network_image: ^3.4.1
+  google_fonts: ^6.2.1
+  wakelock_plus: ^1.2.8
+  flutter_bloc: ^8.1.6
+
+flutter:
+  uses-material-design: true
