@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:media_kit/media_kit.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app_state.dart';
 import 'bloc/channel_cubit.dart';
 import 'screens/home_screen.dart';
+import 'screens/intro_screen.dart';
 import 'theme.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   MediaKit.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
@@ -17,17 +19,21 @@ void main() {
   PaintingBinding.instance.imageCache.maximumSize = 3000;
   PaintingBinding.instance.imageCache.maximumSizeBytes = 250 * 1024 * 1024; // 250MB
 
+  final prefs = await SharedPreferences.getInstance();
+  final seenIntro = prefs.getBool(IntroScreen.prefKey) ?? false;
+
   final channelCubit = ChannelCubit();
   channelCubit.init();
   final state = AppState(channelCubit: channelCubit);
 
-  runApp(PulseApp(channelCubit: channelCubit, state: state));
+  runApp(PulseApp(channelCubit: channelCubit, state: state, seenIntro: seenIntro));
 }
 
 class PulseApp extends StatelessWidget {
   final ChannelCubit channelCubit;
   final AppState state;
-  const PulseApp({super.key, required this.channelCubit, required this.state});
+  final bool seenIntro;
+  const PulseApp({super.key, required this.channelCubit, required this.state, this.seenIntro = false});
 
   @override
   Widget build(BuildContext context) {
@@ -39,9 +45,10 @@ class PulseApp extends StatelessWidget {
           title: 'Pulse TV',
           debugShowCheckedModeBanner: false,
           theme: buildTheme(),
-          home: const HomeScreen(),
+          home: seenIntro ? const HomeScreen() : const IntroScreen(),
         ),
       ),
     );
   }
 }
+

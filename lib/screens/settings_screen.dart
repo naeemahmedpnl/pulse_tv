@@ -5,6 +5,7 @@ import '../services/playlist_service.dart';
 import '../theme.dart';
 import '../widgets/common.dart';
 import '../widgets/focus_card.dart';
+import 'intro_screen.dart';
 
 class SettingsView extends StatefulWidget {
   const SettingsView({super.key});
@@ -138,6 +139,15 @@ class _SettingsViewState extends State<SettingsView> {
               icon: Icons.restart_alt_rounded,
               label: 'Reset to Defaults',
               onTap: () => s.setSources(List.of(PlaylistService.defaultSources)),
+            ),
+            PillButton(
+              icon: Icons.auto_awesome_rounded,
+              label: 'Replay Intro Tour',
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => IntroScreen(onComplete: () => Navigator.pop(context))),
+                );
+              },
             ),
           ],
         ),
