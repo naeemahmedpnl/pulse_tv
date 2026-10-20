@@ -1,9 +1,11 @@
 import 'dart:async';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../models/channel.dart';
+import '../services/channel_logo_resolver.dart';
 import '../theme.dart';
 import 'focus_card.dart';
 
@@ -15,9 +17,37 @@ class ChannelLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (channel.logo.isEmpty) return _fallback();
+    final resolvedUrl = ChannelLogoResolver.resolve(channel);
+    if (resolvedUrl.isEmpty) return _fallback();
+
+    if (kIsWeb) {
+      return Image.network(
+        resolvedUrl,
+        width: size,
+        height: size,
+        fit: BoxFit.contain,
+        filterQuality: FilterQuality.medium,
+        loadingBuilder: (context, child, progress) {
+          if (progress == null) return child;
+          return _placeholder();
+        },
+        errorBuilder: (context, error, stackTrace) {
+          if (channel.logo.isNotEmpty && channel.logo != resolvedUrl && channel.logo.startsWith('http')) {
+            return Image.network(
+              channel.logo,
+              width: size,
+              height: size,
+              fit: BoxFit.contain,
+              errorBuilder: (_, __, ___) => _fallback(),
+            );
+          }
+          return _fallback();
+        },
+      );
+    }
+
     return CachedNetworkImage(
-      imageUrl: channel.logo,
+      imageUrl: resolvedUrl,
       width: size,
       height: size,
       fit: BoxFit.contain,
@@ -28,7 +58,18 @@ class ChannelLogo extends StatelessWidget {
       useOldImageOnUrlChange: true,
       fadeInDuration: const Duration(milliseconds: 60),
       placeholder: (_, __) => _placeholder(),
-      errorWidget: (_, __, ___) => _fallback(),
+      errorWidget: (_, __, ___) {
+        if (channel.logo.isNotEmpty && channel.logo != resolvedUrl && channel.logo.startsWith('http')) {
+          return CachedNetworkImage(
+            imageUrl: channel.logo,
+            width: size,
+            height: size,
+            fit: BoxFit.contain,
+            errorWidget: (_, __, ___) => _fallback(),
+          );
+        }
+        return _fallback();
+      },
     );
   }
 
@@ -49,8 +90,6 @@ class ChannelLogo extends StatelessWidget {
 
   Widget _fallback() {
     final isPK = channel.country == 'PK';
-    final a = isPK ? const Color(0xFF01411C) : const Color(0xFFFF9933);
-    final b = isPK ? const Color(0xFF00220F) : const Color(0xFF138808);
     return Container(
       width: size,
       height: size,
@@ -58,44 +97,201 @@ class ChannelLogo extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(size * 0.24),
         gradient: LinearGradient(
-          colors: [a, b],
+          colors: isPK
+              ? [const Color(0xFF06331A), const Color(0xFF03160B)]
+              : [const Color(0xFF331D06), const Color(0xFF160E03)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        border: Border.all(color: Colors.white.withOpacity(0.18)),
+        border: Border.all(
+          color: (isPK ? const Color(0xFF00FF7F) : Colors.amberAccent).withOpacity(0.35),
+          width: 1.2,
+        ),
         boxShadow: [
           BoxShadow(
-            color: a.withOpacity(0.35),
-            blurRadius: size * 0.25,
-            offset: Offset(0, size * 0.08),
+            color: (isPK ? const Color(0xFF00FF7F) : Colors.amberAccent).withOpacity(0.18),
+            blurRadius: size * 0.3,
+            spreadRadius: -2,
           ),
         ],
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
+      child: Stack(
+        alignment: Alignment.center,
         children: [
-          Text(
-            channel.initials,
-            style: TextStyle(
-              fontSize: size * 0.34,
-              fontWeight: FontWeight.w900,
-              letterSpacing: 0.8,
-              color: Colors.white,
-            ),
+          Icon(
+            Icons.live_tv_rounded,
+            size: size * 0.62,
+            color: Colors.white.withOpacity(0.06),
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
-            decoration: BoxDecoration(
-              color: Colors.black.withOpacity(0.4),
-              borderRadius: BorderRadius.circular(4),
-            ),
-            child: Text(
-              channel.displayQuality,
-              style: const TextStyle(fontSize: 8, fontWeight: FontWeight.w800, color: AppColors.cyan),
-            ),
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                channel.initials,
+                style: TextStyle(
+                  fontSize: size * 0.34,
+                  fontWeight: FontWeight.w900,
+                  letterSpacing: 1.0,
+                  color: Colors.white,
+                  shadows: [
+                    Shadow(
+                      color: isPK ? const Color(0xFF00FF7F) : Colors.amberAccent,
+                      blurRadius: 8,
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 2),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.6),
+                  borderRadius: BorderRadius.circular(4),
+                  border: Border.all(
+                    color: AppColors.cyan.withOpacity(0.4),
+                    width: 0.8,
+                  ),
+                ),
+                child: Text(
+                  channel.displayQuality,
+                  style: const TextStyle(
+                    fontSize: 8,
+                    fontWeight: FontWeight.w900,
+                    color: AppColors.cyan,
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),
+    );
+  }
+}
+
+/// Official Pulse TV glowing cyber brand emblem & logo.
+class PulseTvBrandLogo extends StatelessWidget {
+  final double size;
+  final bool withText;
+  const PulseTvBrandLogo({super.key, this.size = 44, this.withText = false});
+
+  @override
+  Widget build(BuildContext context) {
+    final emblem = Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          colors: [Color(0xFF00E5FF), Color(0xFF8B5CF6), Color(0xFFFF007A)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(size * 0.32),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xFF00E5FF).withOpacity(0.4),
+            blurRadius: size * 0.45,
+            spreadRadius: -2,
+            offset: Offset(0, size * 0.1),
+          ),
+          BoxShadow(
+            color: const Color(0xFFFF007A).withOpacity(0.3),
+            blurRadius: size * 0.35,
+            offset: Offset(0, -size * 0.05),
+          ),
+        ],
+        border: Border.all(
+          color: Colors.white.withOpacity(0.4),
+          width: 1.2,
+        ),
+      ),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          // Background radar wave icon
+          Icon(
+            Icons.stream_rounded,
+            color: Colors.white.withOpacity(0.35),
+            size: size * 0.72,
+          ),
+          // Heartbeat pulse waveform
+          Icon(
+            Icons.graphic_eq_rounded,
+            color: Colors.white,
+            size: size * 0.55,
+          ),
+        ],
+      ),
+    );
+
+    if (!withText) return emblem;
+
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        emblem,
+        SizedBox(width: size * 0.28),
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'PULSE',
+                  style: TextStyle(
+                    fontSize: size * 0.46,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: 1.4,
+                    color: Colors.white,
+                    height: 1.0,
+                  ),
+                ),
+                SizedBox(width: size * 0.14),
+                Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: size * 0.18,
+                    vertical: size * 0.05,
+                  ),
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFF00E5FF), Color(0xFF0072FF)],
+                    ),
+                    borderRadius: BorderRadius.circular(size * 0.14),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFF00E5FF).withOpacity(0.4),
+                        blurRadius: 8,
+                      ),
+                    ],
+                  ),
+                  child: Text(
+                    'TV',
+                    style: TextStyle(
+                      fontSize: size * 0.28,
+                      fontWeight: FontWeight.w900,
+                      color: Colors.black,
+                      letterSpacing: 0.8,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: size * 0.06),
+            Text(
+              'LIVE STREAMING HUB',
+              style: TextStyle(
+                fontSize: size * 0.19,
+                fontWeight: FontWeight.w800,
+                color: AppColors.cyan,
+                letterSpacing: 1.6,
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

@@ -215,40 +215,44 @@ class _Header extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Row(
-                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                        decoration: BoxDecoration(
-                          color: AppColors.emerald.withOpacity(0.12),
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(color: AppColors.emerald.withOpacity(0.35)),
-                        ),
-                        child: const Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(Icons.bolt_rounded, size: 14, color: AppColors.emerald),
-                            SizedBox(width: 6),
-                            Text(
-                              '🇵🇰 PK & 🇮🇳 IN HD ENGINE ACTIVE',
-                              style: TextStyle(
-                                fontSize: 10,
-                                fontWeight: FontWeight.w800,
-                                letterSpacing: 0.8,
-                                color: AppColors.emerald,
+                      const PulseTvBrandLogo(size: 40, withText: true),
+                      const Spacer(),
+                      if (!isSmall) ...[
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                          decoration: BoxDecoration(
+                            color: AppColors.emerald.withOpacity(0.12),
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(color: AppColors.emerald.withOpacity(0.35)),
+                          ),
+                          child: const Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(Icons.bolt_rounded, size: 14, color: AppColors.emerald),
+                              SizedBox(width: 6),
+                              Text(
+                                '🇵🇰 PK & 🇮🇳 IN HD ENGINE ACTIVE',
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w800,
+                                  letterSpacing: 0.8,
+                                  color: AppColors.emerald,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: 10),
-                      Text(
-                        _greeting,
-                        style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: AppColors.textDim),
-                      ),
+                        const SizedBox(width: 10),
+                        Text(
+                          _greeting,
+                          style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: AppColors.textDim),
+                        ),
+                      ],
                     ],
                   ),
-                  const SizedBox(height: 6),
+                  const SizedBox(height: 14),
                   Wrap(
                     crossAxisAlignment: WrapCrossAlignment.center,
                     spacing: 12,
@@ -261,7 +265,7 @@ class _Header extends StatelessWidget {
                         child: Text(
                           '$count HD Channels Live',
                           style: TextStyle(
-                            fontSize: isSmall ? 26 : 34,
+                            fontSize: isSmall ? 24 : 32,
                             fontWeight: FontWeight.w900,
                             letterSpacing: -0.8,
                             height: 1.1,

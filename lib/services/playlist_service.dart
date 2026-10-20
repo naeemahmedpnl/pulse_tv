@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/channel.dart';
+import 'channel_logo_resolver.dart';
 
 class PlaylistService {
   /// Pakistan and India live IPTV streams (iptv-org open project).
@@ -14,7 +15,7 @@ class PlaylistService {
     'https://iptv-org.github.io/iptv/countries/in.m3u',
   ];
 
-  static const _cacheKey = 'cache_channels_pk_in_v3';
+  static const _cacheKey = 'cache_channels_pk_in_v6';
 
   Future<List<Channel>> fetchAll(List<String> sources) async {
     final bodies = await Future.wait(sources.map(_fetch));
@@ -165,7 +166,23 @@ Channel _build(String info, String url, Map<String, String> headers, {String def
   var group = attr('group-title').split(';').first.trim();
   if (group.isEmpty || group.toLowerCase() == 'undefined') group = 'General';
 
-  final logo = attr('tvg-logo').trim();
+  var logo = attr('tvg-logo').trim();
+
+  final initial = Channel(
+    id: id,
+    name: name.isEmpty ? 'Unknown' : name,
+    url: url,
+    logo: logo,
+    group: group,
+    country: country,
+    quality: q,
+    headers: headers,
+  );
+
+  final resolvedLogo = ChannelLogoResolver.resolve(initial);
+  if (resolvedLogo.isNotEmpty) {
+    logo = resolvedLogo;
+  }
 
   return Channel(
     id: id,
