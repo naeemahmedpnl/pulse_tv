@@ -419,11 +419,11 @@ class _PlayerScreenState extends State<PlayerScreen> {
                       child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
                         decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.8),
+                          color: Colors.black.withValues(alpha: 0.8),
                           borderRadius: BorderRadius.circular(100),
-                          border: Border.all(color: AppColors.cyan.withOpacity(0.6)),
+                          border: Border.all(color: AppColors.cyan.withValues(alpha: 0.6)),
                           boxShadow: [
-                            BoxShadow(color: AppColors.cyan.withOpacity(0.35), blurRadius: 24),
+                            BoxShadow(color: AppColors.cyan.withValues(alpha: 0.35), blurRadius: 24),
                           ],
                         ),
                         child: Text(
@@ -521,7 +521,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                       child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
                         decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.55),
+                          color: Colors.black.withValues(alpha: 0.55),
                           borderRadius: BorderRadius.circular(100),
                           border: Border.all(color: Colors.white12),
                         ),
@@ -550,9 +550,9 @@ class _PlayerScreenState extends State<PlayerScreen> {
             width: 68,
             height: 68,
             decoration: BoxDecoration(
-              color: AppColors.live.withOpacity(0.18),
+              color: AppColors.live.withValues(alpha: 0.18),
               shape: BoxShape.circle,
-              border: Border.all(color: AppColors.live.withOpacity(0.4)),
+              border: Border.all(color: AppColors.live.withValues(alpha: 0.4)),
             ),
             child: const Icon(Icons.portable_wifi_off_rounded, color: AppColors.live, size: 32),
           ),
@@ -565,9 +565,9 @@ class _PlayerScreenState extends State<PlayerScreen> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
               decoration: BoxDecoration(
-                color: AppColors.accent2.withOpacity(0.15),
+                color: AppColors.accent2.withValues(alpha: 0.15),
                 borderRadius: BorderRadius.circular(100),
-                border: Border.all(color: AppColors.accent2.withOpacity(0.4)),
+                border: Border.all(color: AppColors.accent2.withValues(alpha: 0.4)),
               ),
               child: Text(
                 'Auto-skipping to next channel in $_countdown…',
@@ -677,18 +677,18 @@ class _ModernPlayerControlsDeck extends StatelessWidget {
                 ),
                 borderRadius: BorderRadius.circular(28),
                 border: Border.all(
-                  color: AppColors.cyan.withOpacity(0.35),
+                  color: AppColors.cyan.withValues(alpha: 0.35),
                   width: 1.2,
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: AppColors.cyan.withOpacity(0.22),
+                    color: AppColors.cyan.withValues(alpha: 0.22),
                     blurRadius: 36,
                     spreadRadius: -4,
                     offset: const Offset(0, 10),
                   ),
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.8),
+                    color: Colors.black.withValues(alpha: 0.8),
                     blurRadius: 20,
                     offset: const Offset(0, 4),
                   ),
@@ -705,9 +705,9 @@ class _ModernPlayerControlsDeck extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
                         decoration: BoxDecoration(
-                          color: AppColors.cyan.withOpacity(0.18),
+                          color: AppColors.cyan.withValues(alpha: 0.18),
                           borderRadius: BorderRadius.circular(6),
-                          border: Border.all(color: AppColors.cyan.withOpacity(0.4)),
+                          border: Border.all(color: AppColors.cyan.withValues(alpha: 0.4)),
                         ),
                         child: Text(
                           '${channel.displayQuality} · 60FPS',
@@ -724,7 +724,7 @@ class _ModernPlayerControlsDeck extends StatelessWidget {
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.08),
+                            color: Colors.white.withValues(alpha: 0.08),
                             borderRadius: BorderRadius.circular(6),
                           ),
                           child: Row(
@@ -737,7 +737,7 @@ class _ModernPlayerControlsDeck extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 10,
                                   fontWeight: FontWeight.w800,
-                                  color: Colors.white.withOpacity(0.8),
+                                  color: Colors.white.withValues(alpha: 0.8),
                                   letterSpacing: 0.6,
                                 ),
                               ),
@@ -751,14 +751,14 @@ class _ModernPlayerControlsDeck extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 11,
                           fontWeight: FontWeight.w700,
-                          color: Colors.white.withOpacity(0.6),
+                          color: Colors.white.withValues(alpha: 0.6),
                           letterSpacing: 0.8,
                         ),
                       ),
                     ],
                   ),
                   const SizedBox(height: 12),
-                  Container(height: 1, color: Colors.white.withOpacity(0.08)),
+                  Container(height: 1, color: Colors.white.withValues(alpha: 0.08)),
                   const SizedBox(height: 12),
 
                   // Bottom Interactive Controls Row
@@ -804,7 +804,7 @@ class _ModernPlayerControlsDeck extends StatelessWidget {
 
                       if (!narrow) ...[
                         const SizedBox(width: 16),
-                        Container(width: 1, height: 32, color: Colors.white.withOpacity(0.1)),
+                        Container(width: 1, height: 32, color: Colors.white.withValues(alpha: 0.1)),
                         const SizedBox(width: 16),
                       ],
 
@@ -853,13 +853,13 @@ class _ModernPlayerControlsDeck extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: 11,
                                 fontWeight: FontWeight.w700,
-                                color: Colors.white.withOpacity(0.7),
+                                color: Colors.white.withValues(alpha: 0.7),
                               ),
                             ),
                           ],
                         ),
                         const SizedBox(width: 16),
-                        Container(width: 1, height: 32, color: Colors.white.withOpacity(0.1)),
+                        Container(width: 1, height: 32, color: Colors.white.withValues(alpha: 0.1)),
                         const SizedBox(width: 16),
                       ],
 
@@ -946,13 +946,13 @@ class _CyberPlayButton extends StatelessWidget {
             ),
             boxShadow: [
               BoxShadow(
-                color: AppColors.cyan.withOpacity(focused ? 0.8 : 0.45),
+                color: AppColors.cyan.withValues(alpha: focused ? 0.8 : 0.45),
                 blurRadius: focused ? 24 : 16,
                 spreadRadius: focused ? 3 : 0,
               ),
             ],
             border: Border.all(
-              color: Colors.white.withOpacity(focused ? 1.0 : 0.4),
+              color: Colors.white.withValues(alpha: focused ? 1.0 : 0.4),
               width: focused ? 2.5 : 1.2,
             ),
           ),
@@ -999,16 +999,16 @@ class _GlassIconButton extends StatelessWidget {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: focused
-                  ? AppColors.cyan.withOpacity(0.3)
-                  : Colors.white.withOpacity(0.08),
+                  ? AppColors.cyan.withValues(alpha: 0.3)
+                  : Colors.white.withValues(alpha: 0.08),
               border: Border.all(
-                color: focused ? AppColors.cyan : Colors.white.withOpacity(0.18),
+                color: focused ? AppColors.cyan : Colors.white.withValues(alpha: 0.18),
                 width: focused ? 2 : 1,
               ),
               boxShadow: focused
                   ? [
                       BoxShadow(
-                        color: AppColors.cyan.withOpacity(0.5),
+                        color: AppColors.cyan.withValues(alpha: 0.5),
                         blurRadius: 14,
                       )
                     ]
@@ -1053,17 +1053,17 @@ class _GlassPillButton extends StatelessWidget {
                 : null,
             color: primary
                 ? null
-                : (focused ? Colors.white.withOpacity(0.2) : Colors.white.withOpacity(0.08)),
+                : (focused ? Colors.white.withValues(alpha: 0.2) : Colors.white.withValues(alpha: 0.08)),
             border: Border.all(
               color: focused
                   ? Colors.white
-                  : (primary ? AppColors.cyan : Colors.white.withOpacity(0.18)),
+                  : (primary ? AppColors.cyan : Colors.white.withValues(alpha: 0.18)),
               width: focused ? 1.8 : 1,
             ),
             boxShadow: focused || primary
                 ? [
                     BoxShadow(
-                      color: (primary ? AppColors.cyan : Colors.white).withOpacity(0.35),
+                      color: (primary ? AppColors.cyan : Colors.white).withValues(alpha: 0.35),
                       blurRadius: 14,
                     )
                   ]
@@ -1115,9 +1115,9 @@ class _MiniLiveBeaconState extends State<_MiniLiveBeacon>
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
       decoration: BoxDecoration(
-        color: AppColors.live.withOpacity(0.18),
+        color: AppColors.live.withValues(alpha: 0.18),
         borderRadius: BorderRadius.circular(100),
-        border: Border.all(color: AppColors.live.withOpacity(0.4)),
+        border: Border.all(color: AppColors.live.withValues(alpha: 0.4)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -1132,7 +1132,7 @@ class _MiniLiveBeaconState extends State<_MiniLiveBeacon>
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
-                    color: AppColors.live.withOpacity(0.8),
+                    color: AppColors.live.withValues(alpha: 0.8),
                     blurRadius: 4 + 4 * _ctrl.value,
                   ),
                 ],
@@ -1168,9 +1168,9 @@ class _Glass extends StatelessWidget {
           child: Container(
             padding: padding,
             decoration: BoxDecoration(
-              color: Colors.black.withOpacity(0.55),
+              color: Colors.black.withValues(alpha: 0.55),
               borderRadius: BorderRadius.circular(26),
-              border: Border.all(color: Colors.white.withOpacity(0.14)),
+              border: Border.all(color: Colors.white.withValues(alpha: 0.14)),
             ),
             child: child,
           ),
@@ -1203,7 +1203,7 @@ class _TopBar extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [Colors.black.withOpacity(0.92), Colors.transparent],
+          colors: [Colors.black.withValues(alpha: 0.92), Colors.transparent],
         ),
       ),
       child: Row(
@@ -1225,12 +1225,12 @@ class _TopBar extends StatelessWidget {
             height: narrow ? 68 : 88,
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.12),
+              color: Colors.white.withValues(alpha: 0.12),
               borderRadius: BorderRadius.circular(22),
-              border: Border.all(color: Colors.white.withOpacity(0.24)),
+              border: Border.all(color: Colors.white.withValues(alpha: 0.24)),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.cyan.withOpacity(0.3),
+                  color: AppColors.cyan.withValues(alpha: 0.3),
                   blurRadius: 24,
                   spreadRadius: -2,
                 ),
@@ -1252,9 +1252,9 @@ class _TopBar extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                       decoration: BoxDecoration(
-                        color: AppColors.cyan.withOpacity(0.2),
+                        color: AppColors.cyan.withValues(alpha: 0.2),
                         borderRadius: BorderRadius.circular(6),
-                        border: Border.all(color: AppColors.cyan.withOpacity(0.5)),
+                        border: Border.all(color: AppColors.cyan.withValues(alpha: 0.5)),
                       ),
                       child: Text(
                         'CH ${number.toString().padLeft(3, '0')}',
@@ -1354,8 +1354,8 @@ class _ChannelStrip extends StatelessWidget {
               begin: Alignment.bottomCenter,
               end: Alignment.topCenter,
               colors: [
-                Colors.black.withOpacity(0.95),
-                Colors.black.withOpacity(0.75),
+                Colors.black.withValues(alpha: 0.95),
+                Colors.black.withValues(alpha: 0.75),
               ],
             ),
             border: const Border(top: BorderSide(color: AppColors.stroke)),
@@ -1373,7 +1373,7 @@ class _ChannelStrip extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                       decoration: BoxDecoration(
-                        color: AppColors.cyan.withOpacity(0.15),
+                        color: AppColors.cyan.withValues(alpha: 0.15),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Text(
@@ -1459,10 +1459,10 @@ class _MiniCard extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(18),
           color: focused
-              ? Colors.white.withOpacity(0.18)
+              ? Colors.white.withValues(alpha: 0.18)
               : playing
-                  ? AppColors.cyan.withOpacity(0.12)
-                  : Colors.white.withOpacity(0.06),
+                  ? AppColors.cyan.withValues(alpha: 0.12)
+                  : Colors.white.withValues(alpha: 0.06),
           border: Border.all(
             color: focused
                 ? Colors.white
@@ -1471,7 +1471,7 @@ class _MiniCard extends StatelessWidget {
           ),
           boxShadow: playing
               ? [
-                  BoxShadow(color: AppColors.cyan.withOpacity(0.3), blurRadius: 14),
+                  BoxShadow(color: AppColors.cyan.withValues(alpha: 0.3), blurRadius: 14),
                 ]
               : null,
         ),
@@ -1539,9 +1539,9 @@ class _EqualizerIconState extends State<_EqualizerIcon> with SingleTickerProvide
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
           decoration: BoxDecoration(
-            color: Colors.black.withOpacity(0.6),
+            color: Colors.black.withValues(alpha: 0.6),
             borderRadius: BorderRadius.circular(6),
-            border: Border.all(color: AppColors.cyan.withOpacity(0.4)),
+            border: Border.all(color: AppColors.cyan.withValues(alpha: 0.4)),
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,

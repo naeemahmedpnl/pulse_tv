@@ -79,7 +79,7 @@ class ChannelLogo extends StatelessWidget {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(size * 0.22),
-          color: Colors.white.withOpacity(0.04),
+          color: Colors.white.withValues(alpha: 0.04),
         ),
         child: SizedBox(
           width: size * 0.25,
@@ -104,12 +104,12 @@ class ChannelLogo extends StatelessWidget {
           end: Alignment.bottomRight,
         ),
         border: Border.all(
-          color: (isPK ? const Color(0xFF00FF7F) : Colors.amberAccent).withOpacity(0.35),
+          color: (isPK ? const Color(0xFF00FF7F) : Colors.amberAccent).withValues(alpha: 0.35),
           width: 1.2,
         ),
         boxShadow: [
           BoxShadow(
-            color: (isPK ? const Color(0xFF00FF7F) : Colors.amberAccent).withOpacity(0.18),
+            color: (isPK ? const Color(0xFF00FF7F) : Colors.amberAccent).withValues(alpha: 0.18),
             blurRadius: size * 0.3,
             spreadRadius: -2,
           ),
@@ -121,7 +121,7 @@ class ChannelLogo extends StatelessWidget {
           Icon(
             Icons.live_tv_rounded,
             size: size * 0.62,
-            color: Colors.white.withOpacity(0.06),
+            color: Colors.white.withValues(alpha: 0.06),
           ),
           Column(
             mainAxisSize: MainAxisSize.min,
@@ -145,10 +145,10 @@ class ChannelLogo extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
                 decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.6),
+                  color: Colors.black.withValues(alpha: 0.6),
                   borderRadius: BorderRadius.circular(4),
                   border: Border.all(
-                    color: AppColors.cyan.withOpacity(0.4),
+                    color: AppColors.cyan.withValues(alpha: 0.4),
                     width: 0.8,
                   ),
                 ),
@@ -181,46 +181,30 @@ class PulseTvBrandLogo extends StatelessWidget {
       width: size,
       height: size,
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [Color(0xFF00E5FF), Color(0xFF8B5CF6), Color(0xFFFF007A)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        borderRadius: BorderRadius.circular(size * 0.32),
+        borderRadius: BorderRadius.circular(size * 0.26),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF00E5FF).withOpacity(0.4),
+            color: const Color(0xFF00E5FF).withValues(alpha: 0.35),
             blurRadius: size * 0.45,
             spreadRadius: -2,
-            offset: Offset(0, size * 0.1),
+            offset: Offset(0, size * 0.08),
           ),
           BoxShadow(
-            color: const Color(0xFFFF007A).withOpacity(0.3),
+            color: const Color(0xFFFF007A).withValues(alpha: 0.25),
             blurRadius: size * 0.35,
-            offset: Offset(0, -size * 0.05),
+            offset: Offset(0, -size * 0.04),
           ),
         ],
-        border: Border.all(
-          color: Colors.white.withOpacity(0.4),
-          width: 1.2,
-        ),
       ),
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          // Background radar wave icon
-          Icon(
-            Icons.stream_rounded,
-            color: Colors.white.withOpacity(0.35),
-            size: size * 0.72,
-          ),
-          // Heartbeat pulse waveform
-          Icon(
-            Icons.graphic_eq_rounded,
-            color: Colors.white,
-            size: size * 0.55,
-          ),
-        ],
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(size * 0.26),
+        child: Image.asset(
+          'assets/logo.png',
+          width: size,
+          height: size,
+          fit: BoxFit.cover,
+          errorBuilder: (_, __, ___) => _vectorEmblem(size),
+        ),
       ),
     );
 
@@ -262,7 +246,7 @@ class PulseTvBrandLogo extends StatelessWidget {
                     borderRadius: BorderRadius.circular(size * 0.14),
                     boxShadow: [
                       BoxShadow(
-                        color: const Color(0xFF00E5FF).withOpacity(0.4),
+                        color: const Color(0xFF00E5FF).withValues(alpha: 0.4),
                         blurRadius: 8,
                       ),
                     ],
@@ -292,6 +276,40 @@ class PulseTvBrandLogo extends StatelessWidget {
           ],
         ),
       ],
+    );
+  }
+
+  Widget _vectorEmblem(double s) {
+    return Container(
+      width: s,
+      height: s,
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          colors: [Color(0xFF00E5FF), Color(0xFF8B5CF6), Color(0xFFFF007A)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(s * 0.28),
+        border: Border.all(
+          color: Colors.white.withValues(alpha: 0.4),
+          width: 1.2,
+        ),
+      ),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Icon(
+            Icons.stream_rounded,
+            color: Colors.white.withValues(alpha: 0.35),
+            size: s * 0.72,
+          ),
+          Icon(
+            Icons.graphic_eq_rounded,
+            color: Colors.white,
+            size: s * 0.55,
+          ),
+        ],
+      ),
     );
   }
 }
@@ -335,7 +353,7 @@ class _LiveBadgeState extends State<LiveBadge> with SingleTickerProviderStateMix
         borderRadius: BorderRadius.circular(100),
         boxShadow: [
           BoxShadow(
-            color: AppColors.live.withOpacity(0.55),
+            color: AppColors.live.withValues(alpha: 0.55),
             blurRadius: large ? 16 : 10,
             spreadRadius: -1,
           ),
@@ -355,7 +373,7 @@ class _LiveBadgeState extends State<LiveBadge> with SingleTickerProviderStateMix
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.white.withOpacity(0.8),
+                      color: Colors.white.withValues(alpha: 0.8),
                       blurRadius: 4 + 4 * _ctrl.value,
                       spreadRadius: 1 * _ctrl.value,
                     ),
@@ -393,16 +411,16 @@ class Tag extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
       decoration: BoxDecoration(
         color: isHD
-            ? AppColors.cyan.withOpacity(0.16)
+            ? AppColors.cyan.withValues(alpha: 0.16)
             : highlight
-                ? AppColors.accent.withOpacity(0.18)
-                : Colors.black.withOpacity(0.6),
+                ? AppColors.accent.withValues(alpha: 0.18)
+                : Colors.black.withValues(alpha: 0.6),
         borderRadius: BorderRadius.circular(6),
         border: Border.all(
           color: isHD
-              ? AppColors.cyan.withOpacity(0.6)
+              ? AppColors.cyan.withValues(alpha: 0.6)
               : highlight
-                  ? AppColors.accent.withOpacity(0.4)
+                  ? AppColors.accent.withValues(alpha: 0.4)
                   : AppColors.stroke,
           width: 0.8,
         ),
@@ -475,7 +493,7 @@ class ChannelCard extends StatelessWidget {
                             borderRadius: BorderRadius.circular(20),
                             gradient: RadialGradient(
                               colors: [
-                                AppColors.cyan.withOpacity(0.18),
+                                AppColors.cyan.withValues(alpha: 0.18),
                                 Colors.transparent,
                               ],
                               radius: 0.8,
@@ -502,9 +520,9 @@ class ChannelCard extends StatelessWidget {
                         child: Container(
                           padding: const EdgeInsets.all(5),
                           decoration: BoxDecoration(
-                            color: Colors.black.withOpacity(0.6),
+                            color: Colors.black.withValues(alpha: 0.6),
                             shape: BoxShape.circle,
-                            border: Border.all(color: AppColors.accent2.withOpacity(0.5)),
+                            border: Border.all(color: AppColors.accent2.withValues(alpha: 0.5)),
                           ),
                           child: const Icon(Icons.favorite_rounded, size: 14, color: AppColors.accent2),
                         ),
@@ -580,7 +598,7 @@ class PillButton extends StatelessWidget {
           gradient: primary || focused
               ? agenticGradient
               : null,
-          color: primary || focused ? null : Colors.white.withOpacity(0.08),
+          color: primary || focused ? null : Colors.white.withValues(alpha: 0.08),
           border: Border.all(
             color: focused
                 ? Colors.white
@@ -590,7 +608,7 @@ class PillButton extends StatelessWidget {
           boxShadow: primary || focused
               ? [
                   BoxShadow(
-                    color: AppColors.accent.withOpacity(0.45),
+                    color: AppColors.accent.withValues(alpha: 0.45),
                     blurRadius: 20,
                     offset: const Offset(0, 4),
                   ),
@@ -641,7 +659,7 @@ class ChipButton extends StatelessWidget {
               : null,
           color: selected
               ? null
-              : (focused ? Colors.white.withOpacity(0.18) : AppColors.surfaceHi),
+              : (focused ? Colors.white.withValues(alpha: 0.18) : AppColors.surfaceHi),
           border: Border.all(
             color: focused
                 ? AppColors.cyan
@@ -651,7 +669,7 @@ class ChipButton extends StatelessWidget {
           boxShadow: selected
               ? [
                   BoxShadow(
-                    color: AppColors.accent.withOpacity(0.4),
+                    color: AppColors.accent.withValues(alpha: 0.4),
                     blurRadius: 14,
                     offset: const Offset(0, 2),
                   ),
@@ -720,7 +738,7 @@ class AmbientBackground extends StatelessWidget {
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             gradient: RadialGradient(
-              colors: [c.withOpacity(0.18), c.withOpacity(0)],
+              colors: [c.withValues(alpha: 0.18), c.withValues(alpha: 0)],
             ),
           ),
         );
@@ -755,7 +773,7 @@ class SectionTitle extends StatelessWidget {
                 gradient: cyberGradient,
                 borderRadius: BorderRadius.circular(4),
                 boxShadow: [
-                  BoxShadow(color: AppColors.cyan.withOpacity(0.6), blurRadius: 8),
+                  BoxShadow(color: AppColors.cyan.withValues(alpha: 0.6), blurRadius: 8),
                 ],
               ),
             ),
@@ -773,7 +791,7 @@ class SectionTitle extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.08),
+                  color: Colors.white.withValues(alpha: 0.08),
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(color: AppColors.stroke),
                 ),

@@ -54,15 +54,15 @@ class _SideNavState extends State<SideNav> {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  AppColors.surface.withOpacity(_expanded ? 0.98 : 0.85),
-                  AppColors.bg.withOpacity(_expanded ? 0.96 : 0.70),
+                  AppColors.surface.withValues(alpha: _expanded ? 0.98 : 0.85),
+                  AppColors.bg.withValues(alpha: _expanded ? 0.96 : 0.70),
                 ],
               ),
               border: const Border(right: BorderSide(color: AppColors.stroke)),
               boxShadow: _expanded
                   ? [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.5),
+                        color: Colors.black.withValues(alpha: 0.5),
                         blurRadius: 36,
                         offset: const Offset(12, 0),
                       ),
@@ -164,15 +164,15 @@ class _NavButton extends StatelessWidget {
             gradient: selected
                 ? LinearGradient(
                     colors: [
-                      AppColors.accent.withOpacity(0.35),
-                      AppColors.cyan.withOpacity(0.15),
+                      AppColors.accent.withValues(alpha: 0.35),
+                      AppColors.cyan.withValues(alpha: 0.15),
                     ],
                   )
                 : focused
                     ? LinearGradient(
                         colors: [
-                          Colors.white.withOpacity(0.12),
-                          Colors.white.withOpacity(0.04),
+                          Colors.white.withValues(alpha: 0.12),
+                          Colors.white.withValues(alpha: 0.04),
                         ],
                       )
                     : null,
@@ -180,7 +180,7 @@ class _NavButton extends StatelessWidget {
               color: focused
                   ? AppColors.cyan
                   : selected
-                      ? AppColors.accent.withOpacity(0.5)
+                      ? AppColors.accent.withValues(alpha: 0.5)
                       : Colors.transparent,
               width: 1.5,
             ),
@@ -205,7 +205,7 @@ class _NavButton extends StatelessWidget {
                       boxShadow: selected
                           ? [
                               BoxShadow(
-                                color: AppColors.cyan.withOpacity(0.8),
+                                color: AppColors.cyan.withValues(alpha: 0.8),
                                 blurRadius: 8,
                               ),
                             ]
@@ -244,9 +244,9 @@ class _NavButton extends StatelessWidget {
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                             decoration: BoxDecoration(
-                              color: AppColors.live.withOpacity(0.2),
+                              color: AppColors.live.withValues(alpha: 0.2),
                               borderRadius: BorderRadius.circular(6),
-                              border: Border.all(color: AppColors.live.withOpacity(0.5)),
+                              border: Border.all(color: AppColors.live.withValues(alpha: 0.5)),
                             ),
                             child: Text(
                               item.badge,
@@ -291,7 +291,7 @@ class _StatusFooter extends StatelessWidget {
               width: 36,
               height: 36,
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.06),
+                color: Colors.white.withValues(alpha: 0.06),
                 shape: BoxShape.circle,
                 border: Border.all(color: AppColors.stroke),
               ),

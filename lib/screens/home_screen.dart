@@ -78,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ? null
             : NavigationBar(
                 backgroundColor: AppColors.surface,
-                indicatorColor: AppColors.accent.withOpacity(0.25),
+                indicatorColor: AppColors.accent.withValues(alpha: 0.25),
                 selectedIndex: _section,
                 onDestinationSelected: (i) => setState(() => _section = i),
                 destinations: [
@@ -205,7 +205,12 @@ class _Header extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final isSmall = constraints.maxWidth < 560;
+        final w = constraints.maxWidth;
+        final showClock = w >= 660;
+        final showEngineBadge = w >= 800;
+        final showGreeting = w >= 480;
+        final isVerySmall = w < 480;
+
         return Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
@@ -217,15 +222,16 @@ class _Header extends StatelessWidget {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const PulseTvBrandLogo(size: 40, withText: true),
+                      PulseTvBrandLogo(size: 40, withText: w >= 360),
+                      const SizedBox(width: 8),
                       const Spacer(),
-                      if (!isSmall) ...[
+                      if (showEngineBadge) ...[
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                           decoration: BoxDecoration(
-                            color: AppColors.emerald.withOpacity(0.12),
+                            color: AppColors.emerald.withValues(alpha: 0.12),
                             borderRadius: BorderRadius.circular(20),
-                            border: Border.all(color: AppColors.emerald.withOpacity(0.35)),
+                            border: Border.all(color: AppColors.emerald.withValues(alpha: 0.35)),
                           ),
                           child: const Row(
                             mainAxisSize: MainAxisSize.min,
@@ -245,11 +251,16 @@ class _Header extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: 10),
-                        Text(
-                          _greeting,
-                          style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: AppColors.textDim),
-                        ),
                       ],
+                      if (showGreeting)
+                        Flexible(
+                          child: Text(
+                            _greeting,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: AppColors.textDim),
+                          ),
+                        ),
                     ],
                   ),
                   const SizedBox(height: 14),
@@ -265,7 +276,7 @@ class _Header extends StatelessWidget {
                         child: Text(
                           '$count HD Channels Live',
                           style: TextStyle(
-                            fontSize: isSmall ? 24 : 32,
+                            fontSize: isVerySmall ? 22 : (w < 600 ? 26 : 32),
                             fontWeight: FontWeight.w900,
                             letterSpacing: -0.8,
                             height: 1.1,
@@ -283,12 +294,12 @@ class _Header extends StatelessWidget {
                 ],
               ),
             ),
-            if (!isSmall) ...[
+            if (showClock) ...[
               const SizedBox(width: 16),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
                 decoration: BoxDecoration(
-                  color: AppColors.surface.withOpacity(0.8),
+                  color: AppColors.surface.withValues(alpha: 0.8),
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(color: AppColors.stroke),
                 ),
@@ -354,7 +365,7 @@ class _AgenticDiscoveryChips extends StatelessWidget {
                           : focused
                               ? cyberGradient
                               : null,
-                  color: isPK || isIN || focused ? null : AppColors.surfaceHi.withOpacity(0.85),
+                  color: isPK || isIN || focused ? null : AppColors.surfaceHi.withValues(alpha: 0.85),
                   border: Border.all(
                     color: focused
                         ? Colors.white
@@ -407,168 +418,176 @@ class HeroBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final narrow = MediaQuery.sizeOf(context).width < 720;
-    return Container(
-      constraints: BoxConstraints(minHeight: narrow ? 260 : 330),
-      clipBehavior: Clip.antiAlias,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(32),
-        border: Border.all(color: AppColors.strokeGlow),
-        gradient: const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            Color(0xFF261A4E),
-            Color(0xFF100E22),
-            Color(0xFF1D0B24),
-          ],
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.accent.withOpacity(0.25),
-            blurRadius: 40,
-            offset: const Offset(0, 12),
-          ),
-        ],
-      ),
-      child: Stack(
-        children: [
-          // Blurred oversized logo as ambient background art
-          Positioned(
-            right: -60,
-            top: -60,
-            bottom: -60,
-            child: Opacity(
-              opacity: 0.45,
-              child: ImageFiltered(
-                imageFilter: ImageFilter.blur(sigmaX: 60, sigmaY: 60),
-                child: ChannelLogo(channel: channel, size: narrow ? 280 : 440),
-              ),
-            ),
-          ),
-          // Deep dark gradient overlay for crystal readability
-          Positioned.fill(
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Colors.black.withOpacity(0.88),
-                    Colors.black.withOpacity(0.35),
-                  ],
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                ),
-              ),
-            ),
-          ),
-          // Big logo floating frame on wide screens
-          if (!narrow)
-            Positioned(
-              right: 56,
-              top: 0,
-              bottom: 0,
-              child: Center(
-                child: Container(
-                  width: 200,
-                  height: 200,
-                  padding: const EdgeInsets.all(24),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.08),
-                    borderRadius: BorderRadius.circular(36),
-                    border: Border.all(color: Colors.white.withOpacity(0.2)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.cyan.withOpacity(0.25),
-                        blurRadius: 32,
-                        spreadRadius: -4,
-                      ),
-                    ],
-                  ),
-                  child: ChannelLogo(channel: channel, size: 144),
-                ),
-              ),
-            ),
-          // Content
-          Padding(
-            padding: narrow
-                ? const EdgeInsets.all(24)
-                : const EdgeInsets.fromLTRB(44, 38, 280, 38),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Wrap(
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  spacing: 10,
-                  runSpacing: 6,
-                  children: [
-                    const LiveBadge(large: true),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: AppColors.cyan.withOpacity(0.18),
-                        borderRadius: BorderRadius.circular(100),
-                        border: Border.all(color: AppColors.cyan.withOpacity(0.4)),
-                      ),
-                      child: Text(
-                        resumed ? 'RESUME STREAM' : 'AI FEATURED BROADCAST',
-                        style: const TextStyle(
-                          fontSize: 11,
-                          letterSpacing: 1.4,
-                          fontWeight: FontWeight.w800,
-                          color: AppColors.cyan,
-                        ),
-                      ),
-                    ),
-                    Tag(channel.countryFlag, highlight: true),
-                    Tag(channel.displayQuality),
-                  ],
-                ),
-                const SizedBox(height: 14),
-                Text(
-                  channel.name,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: narrow ? 28 : 44,
-                    fontWeight: FontWeight.w900,
-                    letterSpacing: -1.0,
-                    height: 1.1,
-                    color: Colors.white,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  [channel.countryFlag, channel.group, 'Zero-Jitter Ultra Low Latency'].join('  ·  '),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontSize: 15, color: AppColors.textDim, fontWeight: FontWeight.w500),
-                ),
-                SizedBox(height: narrow ? 18 : 24),
-                Wrap(
-                  spacing: 14,
-                  runSpacing: 10,
-                  children: [
-                    PillButton(
-                      icon: Icons.play_arrow_rounded,
-                      label: 'Watch Now',
-                      primary: true,
-                      autofocus: !narrow,
-                      onTap: onWatch,
-                    ),
-                    PillButton(
-                      icon: favorite ? Icons.favorite_rounded : Icons.favorite_border_rounded,
-                      label: favorite ? 'In Favorites' : 'Add to Favorites',
-                      onTap: onFavorite,
-                    ),
-                  ],
-                ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final w = constraints.maxWidth;
+        final showFloatingLogo = w >= 660;
+        final isCompact = w < 500;
+        final contentPadding = showFloatingLogo
+            ? (w < 820 ? const EdgeInsets.fromLTRB(32, 28, 200, 28) : const EdgeInsets.fromLTRB(44, 38, 280, 38))
+            : EdgeInsets.all(isCompact ? 20 : 28);
+
+        return Container(
+          constraints: BoxConstraints(minHeight: isCompact ? 240 : (w < 720 ? 280 : 330)),
+          clipBehavior: Clip.antiAlias,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(32),
+            border: Border.all(color: AppColors.strokeGlow),
+            gradient: const LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Color(0xFF261A4E),
+                Color(0xFF100E22),
+                Color(0xFF1D0B24),
               ],
             ),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.accent.withValues(alpha: 0.25),
+                blurRadius: 40,
+                offset: const Offset(0, 12),
+              ),
+            ],
           ),
-        ],
-      ),
+          child: Stack(
+            children: [
+              // Blurred oversized logo as ambient background art
+              Positioned(
+                right: -60,
+                top: -60,
+                bottom: -60,
+                child: Opacity(
+                  opacity: 0.45,
+                  child: ImageFiltered(
+                    imageFilter: ImageFilter.blur(sigmaX: 60, sigmaY: 60),
+                    child: ChannelLogo(channel: channel, size: w < 720 ? 280 : 440),
+                  ),
+                ),
+              ),
+              // Deep dark gradient overlay for crystal readability
+              Positioned.fill(
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Colors.black.withValues(alpha: 0.88),
+                        Colors.black.withValues(alpha: 0.35),
+                      ],
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                    ),
+                  ),
+                ),
+              ),
+              // Big logo floating frame on wide screens
+              if (showFloatingLogo)
+                Positioned(
+                  right: w < 820 ? 28 : 56,
+                  top: 0,
+                  bottom: 0,
+                  child: Center(
+                    child: Container(
+                      width: w < 820 ? 150 : 200,
+                      height: w < 820 ? 150 : 200,
+                      padding: EdgeInsets.all(w < 820 ? 18 : 24),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withValues(alpha: 0.08),
+                        borderRadius: BorderRadius.circular(w < 820 ? 28 : 36),
+                        border: Border.all(color: Colors.white.withValues(alpha: 0.2)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppColors.cyan.withValues(alpha: 0.25),
+                            blurRadius: 32,
+                            spreadRadius: -4,
+                          ),
+                        ],
+                      ),
+                      child: ChannelLogo(channel: channel, size: w < 820 ? 108 : 144),
+                    ),
+                  ),
+                ),
+              // Content
+              Padding(
+                padding: contentPadding,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      spacing: 10,
+                      runSpacing: 6,
+                      children: [
+                        LiveBadge(large: !isCompact),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                          decoration: BoxDecoration(
+                            color: AppColors.cyan.withValues(alpha: 0.18),
+                            borderRadius: BorderRadius.circular(100),
+                            border: Border.all(color: AppColors.cyan.withValues(alpha: 0.4)),
+                          ),
+                          child: Text(
+                            resumed ? 'RESUME STREAM' : 'AI FEATURED BROADCAST',
+                            style: const TextStyle(
+                              fontSize: 11,
+                              letterSpacing: 1.4,
+                              fontWeight: FontWeight.w800,
+                              color: AppColors.cyan,
+                            ),
+                          ),
+                        ),
+                        Tag(channel.countryFlag, highlight: true),
+                        Tag(channel.displayQuality),
+                      ],
+                    ),
+                    const SizedBox(height: 14),
+                    Text(
+                      channel.name,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: isCompact ? 24 : (w < 720 ? 30 : 44),
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: -1.0,
+                        height: 1.1,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      [channel.countryFlag, channel.group, 'Zero-Jitter Ultra Low Latency'].join('  ·  '),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(fontSize: 15, color: AppColors.textDim, fontWeight: FontWeight.w500),
+                    ),
+                    SizedBox(height: isCompact ? 16 : 24),
+                    Wrap(
+                      spacing: 14,
+                      runSpacing: 10,
+                      children: [
+                        PillButton(
+                          icon: Icons.play_arrow_rounded,
+                          label: 'Watch Now',
+                          primary: true,
+                          autofocus: showFloatingLogo,
+                          onTap: onWatch,
+                        ),
+                        PillButton(
+                          icon: favorite ? Icons.favorite_rounded : Icons.favorite_border_rounded,
+                          label: favorite ? 'In Favorites' : 'Add to Favorites',
+                          onTap: onFavorite,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
@@ -589,7 +608,7 @@ class _LoadingView extends StatelessWidget {
               borderRadius: BorderRadius.circular(24),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.accent.withOpacity(0.5),
+                  color: AppColors.accent.withValues(alpha: 0.5),
                   blurRadius: 30,
                   offset: const Offset(0, 8),
                 ),
@@ -631,7 +650,7 @@ class _ErrorView extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
-              color: AppColors.live.withOpacity(0.15),
+              color: AppColors.live.withValues(alpha: 0.15),
               shape: BoxShape.circle,
             ),
             child: const Icon(Icons.wifi_off_rounded, size: 54, color: AppColors.live),

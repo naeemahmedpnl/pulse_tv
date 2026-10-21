@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,7 +12,7 @@ class IntroScreen extends StatefulWidget {
   final VoidCallback? onComplete;
   const IntroScreen({super.key, this.onComplete});
 
-  static const String prefKey = 'pulse_tv_seen_intro_v1';
+  static const String prefKey = 'pulse_tv_seen_intro_v2';
 
   @override
   State<IntroScreen> createState() => _IntroScreenState();
@@ -97,7 +95,7 @@ class _IntroScreenState extends State<IntroScreen> with SingleTickerProviderStat
                     shape: BoxShape.circle,
                     gradient: RadialGradient(
                       colors: [
-                        const Color(0xFF00E5FF).withOpacity(0.18),
+                        const Color(0xFF00E5FF).withValues(alpha: 0.18),
                         Colors.transparent,
                       ],
                     ),
@@ -114,7 +112,7 @@ class _IntroScreenState extends State<IntroScreen> with SingleTickerProviderStat
                     shape: BoxShape.circle,
                     gradient: RadialGradient(
                       colors: [
-                        const Color(0xFFFF007A).withOpacity(0.16),
+                        const Color(0xFFFF007A).withValues(alpha: 0.16),
                         Colors.transparent,
                       ],
                     ),
@@ -131,7 +129,7 @@ class _IntroScreenState extends State<IntroScreen> with SingleTickerProviderStat
                     shape: BoxShape.circle,
                     gradient: RadialGradient(
                       colors: [
-                        const Color(0xFF8B5CF6).withOpacity(0.12),
+                        const Color(0xFF8B5CF6).withValues(alpha: 0.12),
                         Colors.transparent,
                       ],
                     ),
@@ -168,15 +166,15 @@ class _IntroScreenState extends State<IntroScreen> with SingleTickerProviderStat
                               Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
                                 decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.06),
+                                  color: Colors.white.withValues(alpha: 0.06),
                                   borderRadius: BorderRadius.circular(30),
                                   border: Border.all(
-                                    color: const Color(0xFF00E5FF).withOpacity(0.35),
+                                    color: const Color(0xFF00E5FF).withValues(alpha: 0.35),
                                     width: 1,
                                   ),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: const Color(0xFF00E5FF).withOpacity(0.15),
+                                      color: const Color(0xFF00E5FF).withValues(alpha: 0.15),
                                       blurRadius: 16,
                                     ),
                                   ],
@@ -295,7 +293,7 @@ class _IntroScreenState extends State<IntroScreen> with SingleTickerProviderStat
                                     borderRadius: BorderRadius.circular(20),
                                     boxShadow: [
                                       BoxShadow(
-                                        color: const Color(0xFF00E5FF).withOpacity(focused ? 0.6 : 0.35),
+                                        color: const Color(0xFF00E5FF).withValues(alpha: focused ? 0.6 : 0.35),
                                         blurRadius: focused ? 32 : 20,
                                         spreadRadius: focused ? 1 : -2,
                                         offset: const Offset(0, 6),
@@ -393,20 +391,20 @@ class _FeatureCard extends StatelessWidget {
       width: width,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: const Color(0xFF0E1322).withOpacity(0.7),
+        color: const Color(0xFF0E1322).withValues(alpha: 0.7),
         borderRadius: BorderRadius.circular(18),
         border: Border.all(
-          color: accentColor.withOpacity(0.25),
+          color: accentColor.withValues(alpha: 0.25),
           width: 1.2,
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.3),
+            color: Colors.black.withValues(alpha: 0.3),
             blurRadius: 16,
             offset: const Offset(0, 8),
           ),
           BoxShadow(
-            color: accentColor.withOpacity(0.08),
+            color: accentColor.withValues(alpha: 0.08),
             blurRadius: 18,
           ),
         ],
@@ -417,10 +415,10 @@ class _FeatureCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: accentColor.withOpacity(0.12),
+              color: accentColor.withValues(alpha: 0.12),
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color: accentColor.withOpacity(0.3),
+                color: accentColor.withValues(alpha: 0.3),
                 width: 1,
               ),
             ),
@@ -455,7 +453,7 @@ class _CyberGridPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.white.withOpacity(0.018)
+      ..color = Colors.white.withValues(alpha: 0.018)
       ..strokeWidth = 1.0;
 
     const step = 48.0;

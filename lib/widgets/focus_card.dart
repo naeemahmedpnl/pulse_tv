@@ -93,13 +93,13 @@ class _FocusCardState extends State<FocusCard> {
                 boxShadow: active && widget.glow
                     ? [
                         BoxShadow(
-                          color: AppColors.accent.withOpacity(0.45),
+                          color: AppColors.accent.withValues(alpha: 0.45),
                           blurRadius: 36,
                           spreadRadius: -2,
                           offset: const Offset(0, 8),
                         ),
                         BoxShadow(
-                          color: AppColors.cyan.withOpacity(0.2),
+                          color: AppColors.cyan.withValues(alpha: 0.2),
                           blurRadius: 18,
                           spreadRadius: -4,
                           offset: const Offset(0, -2),

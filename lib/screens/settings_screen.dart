@@ -219,7 +219,7 @@ class _Stat extends StatelessWidget {
         border: Border.all(color: AppColors.stroke),
         boxShadow: [
           BoxShadow(
-            color: accent.withOpacity(0.12),
+            color: accent.withValues(alpha: 0.12),
             blurRadius: 18,
             offset: const Offset(0, 4),
           ),
@@ -231,7 +231,7 @@ class _Stat extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: accent.withOpacity(0.15),
+              color: accent.withValues(alpha: 0.15),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(icon, color: accent, size: 22),
@@ -270,7 +270,7 @@ class _SourceRow extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(6),
             decoration: BoxDecoration(
-              color: AppColors.cyan.withOpacity(0.15),
+              color: AppColors.cyan.withValues(alpha: 0.15),
               borderRadius: BorderRadius.circular(8),
             ),
             child: const Icon(Icons.playlist_play_rounded, color: AppColors.cyan, size: 20),
@@ -305,7 +305,7 @@ class _SourceRow extends StatelessWidget {
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: f ? AppColors.live : Colors.white.withOpacity(0.06),
+                  color: f ? AppColors.live : Colors.white.withValues(alpha: 0.06),
                 ),
                 child: Icon(
                   Icons.close_rounded,

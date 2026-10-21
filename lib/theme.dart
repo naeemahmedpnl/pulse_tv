@@ -68,7 +68,7 @@ ThemeData buildTheme() {
     splashFactory: NoSplash.splashFactory,
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: AppColors.surfaceHi.withOpacity(0.85),
+      fillColor: AppColors.surfaceHi.withValues(alpha: 0.85),
       hintStyle: const TextStyle(color: AppColors.textDim, fontSize: 15),
       contentPadding: const EdgeInsets.symmetric(horizontal: 22, vertical: 18),
       border: OutlineInputBorder(
